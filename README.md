@@ -59,7 +59,7 @@ The visualizer inserts a point every 60 frames, which should translate to 1 seco
 Example, with 4000 points and the search point in the middle of the linear array.
 
 
-![Plot](https://raw.githubusercontent.com/rishabhsinghvi/QuadTree/master/samples/SpeedUpPlot.PNG)
+![Plot](https://raw.githubusercontent.com/rishabhsinghvi/QuadTree/master/samples/SpeedUpPlot.png)
 
 
 
