@@ -1,8 +1,10 @@
+import os
+os.environ['PYGAME_HIDE_SUPPORT_PROMPT'] = "hide"
 import pygame
 import sys
 import matplotlib.pyplot as plt
 import random
-import time
+import timeit
 
 DEFAULT_MAX_CAP = 5
 
@@ -154,15 +156,24 @@ def random_visualize():
 
 
 def plot_speedup():
-    points = []
-    quad = QuadTree()
-
     X = []
     y = []
 
-    MAX_ITER = 1000
+    total_time_start = timeit.default_timer()
+
+    MAX_ITER = 4000
+    print("Calculating...")
     for i in range(2, MAX_ITER+1):
+        
+
         X.append(i)
+
+        if(i % 100 == 0):
+            print("Number of points: " + str(i))
+        
+        points = []
+        quad = QuadTree()
+
         for _ in range(1, i):
             point = Point(random.randrange(0, DIMENSIONS[0]), random.randrange(0, DIMENSIONS[1]))
             points.append(point)
@@ -175,21 +186,31 @@ def plot_speedup():
 
         l_time = None
         q_time = None
-        start = time.time()
+        start = timeit.default_timer()
         for p in points:
             if p.x == to_find.x and p.y == to_find.y:
-                end = time.time()
+                end = timeit.default_timer()
                 l_time = end-start
             
     
-        start = time.time()
+        start = timeit.default_timer()
         if quad.contains_point(to_find):
-            end = time.time()
+            end = timeit.default_timer()
             q_time = end-start
         
         y.append(float(l_time/q_time))
 
+
+    total_time_end = timeit.default_timer()
+
+    print("Total time taken: "+ str(total_time_end-total_time_start) + " seconds.")
+
     plt.plot(X, y)
+
+    plt.xlabel("Number of points")
+    plt.ylabel("Speedup")
+    plt.title("Speedup of quadtree search over linear search")
+    
     plt.show()
     
 
@@ -204,8 +225,10 @@ def main():
         visualize()
     elif num_args == 1 and (sys.argv[1].lower() == "--random" or sys.argv[1].lower() ==  "-r"):
         random_visualize()
-    else:
+    elif num_args == 1 and (sys.argv[1].lower() == "--plot" or sys.argv[1].lower() == "-p"):
         plot_speedup()
+    else:
+        visualize()
 
 
 

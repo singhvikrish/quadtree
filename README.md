@@ -54,6 +54,12 @@ Example of the visualizer:
 The visualizer inserts a point every 60 frames, which should translate to 1 second on most systems.
 
 
-4) To plot speedup between linear and quadtree search, simply run the script without -v
+4) To plot speedup between linear and quadtree search, simply run the script with the argument -p or --plot
+
+Example, with 4000 points and the search point in the middle of the linear array.
+
+
+![Plot](https://raw.githubusercontent.com/rishabhsinghvi/QuadTree/master/samples/SpeedUpPlot.PNG)
+
 
 
