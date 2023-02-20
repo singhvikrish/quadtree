@@ -24,13 +24,36 @@ or alternatively,
 python QuadTree.py --visualize
 ```
 
-3) To plot speedup between linear and quadtree search, simply run the script without -v
-
 
 To use the visualizer, simply click on the window where you want to insert a point. The children of the quadtree are automatically created once the number of points exceeds the maximum capacity.
 
+
 Example of the visualizer:
 
-
 ![Visualizer](https://raw.githubusercontent.com/rishabhsinghvi/QuadTree/master/samples/VisualizerSample.PNG)
+
+
+
+3) To run the visualizer with random points:
+
+```
+python QuadTree.py -rv
+```
+
+or alternatively,
+
+```
+python QuadTree.py --random
+```
+
+Example of the visualizer:
+
+![Visualizer](https://raw.githubusercontent.com/rishabhsinghvi/QuadTree/master/samples/RandomVisualize.gif)
+
+
+The visualizer inserts a point every 60 frames, which should translate to 1 second on most systems.
+
+
+4) To plot speedup between linear and quadtree search, simply run the script without -v
+
 

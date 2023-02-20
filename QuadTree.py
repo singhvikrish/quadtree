@@ -124,6 +124,34 @@ def visualize():
         pygame.display.flip()
 
 
+def random_visualize():
+    # Setup PyGame
+    pygame.init()
+    screen = pygame.display.set_mode(DIMENSIONS)
+    
+
+    # Setup Quadtree
+
+    quadtree = QuadTree()
+
+    running = True
+
+    i = 0
+    while running:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                running = False
+
+        if i % 60 == 0:
+            point = Point(random.randrange(0, DIMENSIONS[0]), random.randrange(0, DIMENSIONS[1]))
+            quadtree.insert_point(point)
+        
+        i += 1
+        quadtree.draw(screen)
+        pygame.display.flip()
+
+
+
 
 def plot_speedup():
 
@@ -193,8 +221,10 @@ def main():
 
     num_args = len(sys.argv) - 1
 
-    if num_args == 1 and (sys.argv[1].lower() == "--visualize"  or "-v"):
+    if num_args == 1 and (sys.argv[1].lower() == "--visualize"  or sys.argv[1].lower() ==  "-v"):
         visualize()
+    elif num_args == 1 and (sys.argv[1].lower() == "--random" or sys.argv[1].lower() ==  "-r"):
+        random_visualize()
     else:
         plot_speedup()
 
