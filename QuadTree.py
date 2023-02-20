@@ -2,7 +2,7 @@ import pygame
 import sys
 import matplotlib.pyplot as plt
 import random
-import datetime
+import time
 
 DEFAULT_MAX_CAP = 5
 
@@ -154,64 +154,43 @@ def random_visualize():
 
 
 def plot_speedup():
+    points = []
+    quad = QuadTree()
 
-    
-    X = []  # Number of points 
-    l_search = []  #Time for Linear Search
-    q_search = [] # Time for QuadTree search
-    y = [] # Speed up
+    X = []
+    y = []
 
-    MIN_NUM_POINTS = 1000
-    MAX_NUM_POINTS = 2000
-
-    for i in range(MIN_NUM_POINTS, MAX_NUM_POINTS + 1):
-
-        
+    MAX_ITER = 1000
+    for i in range(2, MAX_ITER+1):
         X.append(i)
-
-        quadtree = QuadTree()
-        points = []
-
-        for _ in range(1, i+1):
-
+        for _ in range(1, i):
             point = Point(random.randrange(0, DIMENSIONS[0]), random.randrange(0, DIMENSIONS[1]))
             points.append(point)
-            quadtree.insert_point(point)
+            quad.insert_point(point)
+
+        to_find = points[len(points)//2]
+
+        start = None
+        end = None
+
+        l_time = None
+        q_time = None
+        start = time.time()
+        for p in points:
+            if p.x == to_find.x and p.y == to_find.y:
+                end = time.time()
+                l_time = end-start
+            
     
-            
-        # Select middle point to find    
-        point_to_find = points[len(points)//2]
-
-        # Linear Search
-        start = datetime.datetime.now()
-        for point in points:
-            if point.x == point_to_find.x and point.y == point_to_find.y:
-                end = datetime.datetime.now()
-                l_search.append((end - start).microseconds)
-                break
+        start = time.time()
+        if quad.contains_point(to_find):
+            end = time.time()
+            q_time = end-start
         
+        y.append(float(l_time/q_time))
 
-        # QuadTree search
-
-        start = datetime.datetime.now()
-        if quadtree.contains_point(point_to_find):
-            end = datetime.datetime.now()
-            q_search.append((end - start).microseconds)
-        
-
-    y = []
-    for i in range(1, len(l_search)):
-        y.append(float(l_search[i]/q_search[i]))
-
-    plt.plot(X ,y)
-    plt.show()    
-
-            
-                
-
-                
-
-
+    plt.plot(X, y)
+    plt.show()
     
 
 
